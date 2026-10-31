@@ -1,0 +1,5 @@
+apiVersion: manus-dei/profile/v1
+name: base
+slug: base
+description: Base developer environment with the Manica Dei server, browser, Node, Python, and shell.
+platform: linux/amd64

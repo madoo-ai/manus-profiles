@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/deepseek-v4.1-flash",
+  "agent": {
+    "goal-qa": {
+      "model": "opencode/deepseek-v4.1-flash"
+    },
+    "goal-judge": {
+      "model": "opencode/deepseek-v4.1-flash"
+    }
+  },
+  "permission": "allow"
+}

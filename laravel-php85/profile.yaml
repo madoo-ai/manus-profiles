@@ -1,0 +1,6 @@
+apiVersion: manus-dei/profile/v1
+name: laravel-php85
+slug: laravel-php85
+description: Laravel application environment with PHP 8.5, Composer, Node 22, and PostgreSQL 18.
+platform: linux/amd64
+base: base
