@@ -106,7 +106,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 # URL is the mirror, not a redirect (redirects are not a guarantee, and a
 # rename that stops resolving fails the build with a 404 that looks like a
 # missing release).
-ARG OC_VERSION=v0.4.16
+ARG OC_VERSION=v0.4.19
 # `opencode --version` creates /tmp/opencode as root during the build. Remove
 # it so the session user can create its own temp state at runtime.
 RUN mkdir -p /tmp/md \

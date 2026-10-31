@@ -1,7 +1,7 @@
 # Template layer for laravel-react-boilerplate: the common base supplies the
 # agent, browser, Node, and shell; this layer supplies PHP, Composer, and
 # PostgreSQL.
-ARG BASE
+ARG BASE=manus-dei/base:latest
 FROM ${BASE}
 
 USER root
