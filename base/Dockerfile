@@ -34,7 +34,7 @@ ARG AGENT_BROWSER_VERSION=0.27.0
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       ca-certificates curl wget git ripgrep procps vim jq \
-      build-essential python3 unzip zip htop tmux tree file \
+      build-essential python3 unzip zip htop tmux tree file sudo \
       netcat-openbsd openssh-client man-db manpages gnupg \
       tigervnc-standalone-server \
  # The display server's one tool the fork actually calls: `xrandr`.
@@ -129,13 +129,24 @@ ENV OPENCODE_GOAL_REQUIRED=true
 # one principal per container (PLAN §7). Mount-ownership law (spike Decision
 # 5): every volume mount path is pre-created and chowned — fresh named
 # volumes otherwise come up root-owned and opencode dies with EACCES on
-# first write. (sudo is not installed in the base, so the user's sudo-group
-# membership is inert.)
+# first write.
+#
+# Passwordless sudo, deliberately (manus-dei ADR-032): the onboarding sandbox
+# and the image build must run the same provision script, and system packages
+# are the one step that needs root. The container remains the security
+# boundary (ADR-014); this does not widen it. Devcontainers and Codespaces
+# follow the same model.
 RUN mkdir -p /home/ubuntu/workspace \
       /home/ubuntu/.local/share/opencode \
       /home/ubuntu/.local/state/opencode \
       /home/ubuntu/.config/opencode \
  && chown -R ubuntu:ubuntu /home/ubuntu/workspace /home/ubuntu/.local /home/ubuntu/.config
+
+# Passwordless sudo for the session principal (ADR-032). Kept as its own
+# layer so the privilege policy is reviewable in one line.
+RUN printf 'ubuntu ALL=(ALL) NOPASSWD:ALL\n' > /etc/sudoers.d/90-manus \
+ && chmod 0440 /etc/sudoers.d/90-manus \
+ && runuser -u ubuntu -- sudo -n true
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
