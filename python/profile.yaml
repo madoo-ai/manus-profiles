@@ -1,0 +1,51 @@
+slug: abunda-tisu-git
+name: Discord Music Bot (discord.py + Wavelink/Lavalink)
+description: >-
+  Discord music bot made of two plain Python scripts: dcex.py (discord.py
+  commands.Bot with ?ping, ?play, ?disconnect) and def_func.py (Spotipy track
+  lookup). Playback is delegated to a local Lavalink 3.7.5 node on port 2333,
+  whose fat jar and application.yml are vendored under lavalink/. The repository
+  has no package manifest, lockfile, CI, migrations, or tests.
+
+toolchain:
+  - name: java
+    version: "17.0.21+9"
+    vendor: Eclipse Temurin JRE
+    source: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.21%2B9/OpenJDK17U-jre_x64_linux_hotspot_17.0.21_9.tar.gz
+    path: $HOME/.local/opt/temurin-17.0.21+9-jre/bin/java
+  - name: uv
+    version: "0.13.7"
+    source: https://github.com/astral-sh/uv/releases/download/0.13.7/uv-x86_64-unknown-linux-gnu.tar.gz
+    path: $HOME/.local/bin/uv
+  - name: python
+    version: "3.11.18"
+    source: uv-managed cpython-3.11.18-linux-x86_64-gnu
+    path: $HOME/.local/share/uv/python
+  - name: lavalink
+    version: "3.7.5"
+    source: vendored in repository at lavalink/Lavalink.jar
+  - name: discord.py
+    version: "2.3.2"
+  - name: wavelink
+    version: "2.3.0"
+  - name: spotipy
+    version: "2.23.0"
+  - name: python-dotenv
+    version: "1.0.1"
+  - name: pynacl
+    version: "1.5.0"
+
+services:
+  - name: lavalink
+    port: 2333
+    start: "bash -c 'mkdir -p \"$HOME/.manus/services/lavalink\"; if curl -fsS -m 2 -H \"Authorization: youshallnot\" http://127.0.0.1:2333/version >/dev/null 2>&1; then exit 0; fi; cd \"$HOME/.manus/services/lavalink\"; nohup \"$HOME/.local/bin/java\" -jar \"$HOME/workspace/lavalink/Lavalink.jar\" --spring.config.location=file:\"$HOME/workspace/lavalink/application.yml\" >>\"$HOME/.manus/services/lavalink/lavalink.log\" 2>&1 </dev/null & exit 0'"
+    ready: "curl -fsS -m 5 -H 'Authorization: youshallnot' http://127.0.0.1:2333/version"
+    data_dir: "$HOME/.manus/services/lavalink"
+
+env:
+  LAVALINK_HOST: "127.0.0.1"
+  LAVALINK_PORT: "2333"
+  LAVALINK_PASSWORD: "youshallnot"
+  DISCORD_TOKEN: "dummy-discord-token"
+  SPOTIFY_CLIENT_ID: "dummy-client-id"
+  SPOTIFY_CLIENT_SECRET: "dummy-client-secret"
