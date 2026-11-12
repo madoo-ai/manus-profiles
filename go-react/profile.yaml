@@ -1,0 +1,16 @@
+apiVersion: manus-dei/profile/v1
+name: Go React
+slug: go-react
+description: Go + React environment with Go 1.25, Node 22, and PostgreSQL 18.
+platform: linux/amd64
+base: base
+
+env:
+  DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:54330/go_react_boilerplate?sslmode=disable"
+  PGHOST: "127.0.0.1"
+  PGPORT: "54330"
+  PGUSER: "postgres"
+  PGPASSWORD: "postgres"
+  PGDATABASE: "go_react_boilerplate"
+  SMTP_HOST: "127.0.0.1"
+  SMTP_PORT: "1025"

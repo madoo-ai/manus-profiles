@@ -18,6 +18,7 @@ image contains the environment; the session clones the app source at summon.
 | `base` | Shared developer shell, Manica Dei server, browser, Node, Python |
 | `laravel-php85` | Laravel runtime: PHP 8.5, Composer, Node 22, PostgreSQL 18 |
 | `next-node24` | Next.js runtime: Node 24, PostgreSQL 18 |
+| `go-react` | Go + React runtime: Go 1.25, Node 22, PostgreSQL 18 |
 
 ## Build
 
