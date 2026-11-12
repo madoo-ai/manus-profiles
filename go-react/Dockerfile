@@ -23,7 +23,6 @@ ENV PATH=/usr/local/go/bin:${PATH} \
     GOTOOLCHAIN=local
 RUN mkdir -p /home/ubuntu/go && chown ubuntu:ubuntu /home/ubuntu/go
 
-COPY start.sh /opt/manus/template/start.sh
-RUN chmod 0755 /opt/manus/template/start.sh
+COPY --chmod=0755 start.sh /opt/manus/template/start.sh
 
 USER ubuntu
