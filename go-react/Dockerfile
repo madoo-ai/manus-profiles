@@ -17,12 +17,12 @@ RUN set -eux; \
     curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o /tmp/go.tgz; \
     tar -C /usr/local -xzf /tmp/go.tgz; \
     rm /tmp/go.tgz
+RUN mkdir -p /home/ubuntu/go && chown ubuntu:ubuntu /home/ubuntu/go
+
+COPY start.sh /opt/manus/template/start.sh
+RUN chmod 0755 /opt/manus/template/start.sh
+
 USER ubuntu
 ENV PATH=/usr/local/go/bin:${PATH} \
     GOPATH=/home/ubuntu/go \
     GOTOOLCHAIN=local
-RUN mkdir -p /home/ubuntu/go && chown ubuntu:ubuntu /home/ubuntu/go
-
-COPY --chmod=0755 start.sh /opt/manus/template/start.sh
-
-USER ubuntu
