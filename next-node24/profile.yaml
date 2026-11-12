@@ -1,0 +1,6 @@
+apiVersion: manus-dei/profile/v1
+name: Next.js Node 24
+slug: next-node24
+description: Next.js environment with Node 24 and PostgreSQL 18 on the base session image.
+platform: linux/amd64
+base: base
