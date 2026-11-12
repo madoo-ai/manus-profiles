@@ -4,3 +4,12 @@ slug: next-node24
 description: Next.js environment with Node 24 and PostgreSQL 18 on the base session image.
 platform: linux/amd64
 base: base
+
+env:
+  DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/next_boilerplate?schema=public"
+  TEST_DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/next_boilerplate_test?schema=public"
+  PGHOST: "127.0.0.1"
+  PGPORT: "5432"
+  PGUSER: "postgres"
+  PGPASSWORD: "postgres"
+  PGDATABASE: "next_boilerplate"
